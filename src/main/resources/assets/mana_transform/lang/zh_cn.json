@@ -1,0 +1,14 @@
+{
+  "config.mana_transform.enabled": "启用魔力互换",
+  "config.mana_transform.iron_mana_per_dragon_mana": "每点龙魔力对应的铁魔力",
+  "screen.mana_transform.config.title": "Mana Transform 配置",
+  "screen.mana_transform.config.enabled": "启用双向魔力互换",
+  "screen.mana_transform.config.ratio": "1 点龙魔力 =",
+  "screen.mana_transform.config.save": "保存",
+  "screen.mana_transform.config.reset": "恢复默认",
+  "screen.mana_transform.config.preview.forward": "1 点龙魔力 = %s 点铁魔力",
+  "screen.mana_transform.config.preview.reverse": "1 点铁魔力 = %s 点龙魔力",
+  "screen.mana_transform.config.invalid_ratio": "请输入 %s 至 %s 之间的转换比例",
+  "screen.mana_transform.config.server_authoritative": "设置保存在当前世界或服务器，并同步给所有玩家",
+  "screen.mana_transform.config.read_only": "进入世界后，只有单人世界房主或服务器管理员可以修改"
+}

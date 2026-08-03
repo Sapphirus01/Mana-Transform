@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "by.sapphirus.manatransform.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "DragonSurvivalAbilityMixin",
+    "DragonSurvivalManaHandlerMixin",
+    "IronsSpellbooksAbstractSpellMixin",
+    "IronsSpellbooksMagicManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

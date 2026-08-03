@@ -1,0 +1,14 @@
+{
+  "config.mana_transform.enabled": "Enable mana conversion",
+  "config.mana_transform.iron_mana_per_dragon_mana": "Iron mana per Dragon mana",
+  "screen.mana_transform.config.title": "Mana Transform Configuration",
+  "screen.mana_transform.config.enabled": "Enable bidirectional mana conversion",
+  "screen.mana_transform.config.ratio": "1 Dragon mana =",
+  "screen.mana_transform.config.save": "Save",
+  "screen.mana_transform.config.reset": "Reset",
+  "screen.mana_transform.config.preview.forward": "1 Dragon mana = %s Iron mana",
+  "screen.mana_transform.config.preview.reverse": "1 Iron mana = %s Dragon mana",
+  "screen.mana_transform.config.invalid_ratio": "Enter a conversion ratio from %s to %s",
+  "screen.mana_transform.config.server_authoritative": "Saved per world/server and synchronized to every player",
+  "screen.mana_transform.config.read_only": "Join a world; only the host or a server operator can edit these settings"
+}
