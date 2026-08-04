@@ -13,19 +13,20 @@ Mana Transform 是一个用于连接 **Dragon Survival（龙之生存）** 与
 | 项目 | 版本 |
 | --- | --- |
 | Minecraft | 1.21.1 |
-| NeoForge | 21.1.241 |
+| NeoForge | 21.1.186 及以上、低于 21.2.0 |
 | Java | 21 |
-| Dragon Survival | 2.0.62 |
-| Iron's Spells 'n Spellbooks | 1.21.1-3.16.2 |
+| Dragon Survival | 2.0.51 及以上、低于 2.0.63 |
+| Iron's Spells 'n Spellbooks | 1.21.1-3.15.0 及以上、低于 1.21.1-3.17.0 |
 
-当前构建会精确要求上述 Dragon Survival 和 Iron's Spells 版本。两个依赖模组的
-内部实现发生变化时，Mana Transform 的 Mixin 兼容层也可能需要更新。
+这些范围已经写入模组元数据；范围之外的版本会由 NeoForge 在启动阶段拒绝加载。
+Dragon Survival 2.0.63 修改了本模组依赖的魔力接口，因此目前不受支持。由于本模组会调用
+两个依赖模组的内部实现并使用 Mixin，它们未来更新时仍可能需要相应更新兼容层。
 
 ## 安装方法
 
-1. 安装 Minecraft 1.21.1 和适用的 NeoForge 21.1.x。
-2. 安装 Dragon Survival 2.0.62。
-3. 安装 Iron's Spells 'n Spellbooks 1.21.1-3.16.2。
+1. 安装 Minecraft 1.21.1，以及 NeoForge 21.1.186 至 21.1.x 的版本。
+2. 安装 Dragon Survival 2.0.51 至 2.0.62；不要安装 2.0.63。
+3. 安装 Iron's Spells 'n Spellbooks 1.21.1-3.15.x 或 1.21.1-3.16.x。
 4. 根据这两个模组下载页面的要求，安装它们各自的前置模组，例如 Iron's Lib、
    GeckoLib、Curios API 和 Player Animator。不要使用其他 Minecraft 版本的前置。
 5. 将 `mana_transform-1.0.0.jar` 放入游戏或服务器的 `mods` 文件夹。
@@ -121,7 +122,8 @@ ironManaPerDragonMana = 50.0
 
 - 服务端是否启用了转换；
 - 客户端和服务端是否都安装了完全一致的模组版本；
-- Dragon Survival 是否为 2.0.62，Iron's Spells 是否为 1.21.1-3.16.2；
+- Dragon Survival 是否处于 2.0.51～2.0.62，Iron's Spells 是否为
+  1.21.1-3.15.x 或 1.21.1-3.16.x；
 - 使用龙魔力补充铁魔法时，当前玩家是否确实是龙；
 - 两个魔力池按当前比例换算后，总量是否真的足够支付完整消耗；
 - 是否还有冷却、施法条件、装备、目标或环境限制。Mana Transform 只处理魔力不足，
