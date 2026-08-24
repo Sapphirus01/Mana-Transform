@@ -4,7 +4,16 @@ on: [push, pull_request]
 
 jobs:
   build:
+    name: Dragon Survival ${{ matrix.dragon_survival.version }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dragon_survival:
+          - version: '2.0.51'
+            curse_file_id: '7296733'
+          - version: '2.0.66'
+            curse_file_id: '8713690'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,4 +31,4 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build -Pdragonsurvival_curse_file_id=${{ matrix.dragon_survival.curse_file_id }}
