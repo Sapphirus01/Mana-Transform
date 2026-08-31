@@ -8,31 +8,32 @@ Mana Transform 是一个用于连接 **Dragon Survival（龙之生存）** 与
 
 ## 支持版本
 
-当前 `1.0.1` 构建的目标版本为：
+当前 `1.0.2` 构建的目标版本为：
 
 | 项目 | 版本 |
 | --- | --- |
 | Minecraft | 1.21.1 |
 | NeoForge | 21.1.186 及以上、低于 21.2.0 |
 | Java | 21 |
-| Dragon Survival | 2.0.51 及以上、低于 2.0.67（即 2.0.51～2.0.66） |
+| Dragon Survival | 2.0.51 及以上、低于 2.0.69（即 2.0.51～2.0.68） |
 | Iron's Spells 'n Spellbooks | 1.21.1-3.15.0 及以上、低于 1.21.1-3.17.0 |
 
 这些范围已经写入模组元数据；范围之外的版本会由 NeoForge 在启动阶段拒绝加载。
-Dragon Survival 2.0.63 修改了魔力读取、写入和同步接口，并加入了预留魔力机制。Mana
-Transform 1.0.1 会在运行时识别 2.0.51～2.0.62 与 2.0.63～2.0.66 两组接口，并且只把
-未预留、可用于施法的龙魔力纳入转换。2.0.66 已使用实际发布 JAR 完成编译和接口检查。
-由于本模组会调用两个依赖模组的内部实现并使用 Mixin，尚未验证的 2.0.67 及以后版本
-仍可能需要相应更新兼容层，因此暂不提前宣称兼容。
+Dragon Survival 2.0.63 修改了魔力读取、写入和同步接口，并加入了预留魔力机制；2.0.68
+又加入了由玩家控制的经验转魔力开关。Mana Transform 1.0.2 会在运行时识别这些接口，
+只把未预留、可用于施法的龙魔力纳入转换，并在 2.0.68 中遵守玩家的经验转换设置。
+Dragon Survival 2.0.68 与 Iron's Spells 1.21.1-3.16.3 均已使用实际发布 JAR 完成编译、
+接口和 Mixin 目标检查。由于本模组会调用依赖模组的内部实现，2.0.69、3.17.0 及以后
+尚未验证的版本仍可能需要相应兼容更新，因此暂不提前宣称兼容。
 
 ## 安装方法
 
 1. 安装 Minecraft 1.21.1，以及 NeoForge 21.1.186 至 21.1.x 的版本。
-2. 安装 Dragon Survival 2.0.51 至 2.0.66；推荐使用当前最新的 2.0.66。
-3. 安装 Iron's Spells 'n Spellbooks 1.21.1-3.15.x 或 1.21.1-3.16.x。
+2. 安装 Dragon Survival 2.0.51 至 2.0.68；推荐使用当前最新的 2.0.68。
+3. 安装 Iron's Spells 'n Spellbooks 1.21.1-3.15.x 或 1.21.1-3.16.x；当前已验证到 3.16.3。
 4. 根据这两个模组下载页面的要求，安装它们各自的前置模组，例如 Iron's Lib、
    GeckoLib、Curios API 和 Player Animator。不要使用其他 Minecraft 版本的前置。
-5. 将 `mana_transform-1.0.1.jar` 放入游戏或服务器的 `mods` 文件夹。
+5. 将 `mana_transform-1.0.2.jar` 放入游戏或服务器的 `mods` 文件夹。
 6. 启动游戏，打开“模组”列表，确认三个模组都已成功加载。
 
 联机时，Mana Transform 及其依赖需要同时安装在服务端和所有客户端。发布整合包时，
@@ -66,6 +67,9 @@ Mana Transform 的 JAR。
 1. Dragon Survival 龙魔力；
 2. 龙魔力不足时使用 Iron's Spells 铁魔力；
 3. 两种魔力都不足时，最后才沿用 Dragon Survival 原有的经验值魔力规则。
+
+Dragon Survival 2.0.68 及以上可以在龙能力界面关闭经验转魔力。关闭后，Mana Transform
+不会把经验计入可支付总量，也不会为补足龙魔法费用而消耗经验。
 
 ### 持续施法
 
@@ -125,7 +129,7 @@ ironManaPerDragonMana = 50.0
 
 - 服务端是否启用了转换；
 - 客户端和服务端是否都安装了完全一致的模组版本；
-- Dragon Survival 是否处于 2.0.51～2.0.66，Iron's Spells 是否为
+- Dragon Survival 是否处于 2.0.51～2.0.68，Iron's Spells 是否为
   1.21.1-3.15.x 或 1.21.1-3.16.x；
 - 使用龙魔力补充铁魔法时，当前玩家是否确实是龙；
 - 两个魔力池按当前比例换算后，总量是否真的足够支付完整消耗；
@@ -136,6 +140,7 @@ ironManaPerDragonMana = 50.0
 
 经验值是 Dragon Survival 原有的最后备用来源。Mana Transform 会先尝试龙魔力和铁魔力；
 只有两者换算后的可用总量仍不足，或原模组进入其经验支付流程时，才应消耗经验。
+如果使用 Dragon Survival 2.0.68，还需要在龙能力界面开启经验转魔力；关闭时不会使用经验。
 
 ### 为什么持续魔法会一次转换一段魔力？
 
@@ -179,7 +184,7 @@ ironManaPerDragonMana = 50.0
 构建产物位于：
 
 ```text
-build/libs/mana_transform-1.0.1.jar
+build/libs/mana_transform-1.0.2.jar
 ```
 
 开发环境需要 Java 21。依赖由 Gradle 下载，不需要创建 `libs` 文件夹。

@@ -36,6 +36,10 @@ public final class DragonSurvivalManaAdapter {
     }
 
     public static float getExperienceMana(Player player) {
+        MagicData magicData = MagicData.getData(player);
+        if (!MANA_API.usesExperienceForMana(magicData)) {
+            return 0.0F;
+        }
         return Math.max(0.0F, ManaHandler.getManaFromExperience(player));
     }
 
@@ -82,12 +86,13 @@ public final class DragonSurvivalManaAdapter {
     }
 
     /**
-     * Isolates the binary-compatible mana API differences between Dragon Survival 2.0.51-2.0.62
-     * and 2.0.63-2.0.66. Stable APIs stay as ordinary Java calls; only the three changed members
-     * are resolved once here so the same addon JAR can run against either line.
+     * Isolates the binary-compatible mana API differences between Dragon Survival 2.0.51-2.0.62,
+     * 2.0.63-2.0.67, and 2.0.68. Stable APIs stay as ordinary Java calls; only changed or newly
+     * introduced members are resolved once here so the same addon JAR can run across the range.
      */
     private record DragonSurvivalManaApi(
             Method availableManaGetter,
+            Method experienceManaEnabledGetter,
             Method currentManaSetter,
             boolean setterNeedsPlayer,
             Constructor<? extends CustomPacketPayload> syncManaConstructor,
@@ -97,6 +102,8 @@ public final class DragonSurvivalManaAdapter {
 
         private static DragonSurvivalManaApi resolve() {
             Method availableManaGetter = findOptionalMethod(MagicData.class, "getAvailableMana");
+            Method experienceManaEnabledGetter =
+                    findOptionalMethod(MagicData.class, "usesExperienceForMana");
 
             Method currentManaSetter;
             boolean setterNeedsPlayer;
@@ -120,6 +127,7 @@ public final class DragonSurvivalManaAdapter {
                 try {
                     return new DragonSurvivalManaApi(
                             availableManaGetter,
+                            experienceManaEnabledGetter,
                             currentManaSetter,
                             setterNeedsPlayer,
                             syncManaClass.getConstructor(float.class, boolean.class),
@@ -128,6 +136,7 @@ public final class DragonSurvivalManaAdapter {
                     try {
                         return new DragonSurvivalManaApi(
                                 availableManaGetter,
+                                experienceManaEnabledGetter,
                                 currentManaSetter,
                                 setterNeedsPlayer,
                                 syncManaClass.getConstructor(float.class),
@@ -155,6 +164,21 @@ public final class DragonSurvivalManaAdapter {
                 return ((Number) availableManaGetter.invoke(magicData)).floatValue();
             } catch (IllegalAccessException | InvocationTargetException exception) {
                 throw invocationFailure("read available Dragon Survival mana", exception);
+            }
+        }
+
+        private boolean usesExperienceForMana(MagicData magicData) {
+            // Dragon Survival 2.0.68 introduced a player-controlled experience conversion toggle.
+            // Older versions always allow their experience-mana fallback, so a missing getter means
+            // enabled rather than unavailable.
+            if (experienceManaEnabledGetter == null) {
+                return true;
+            }
+
+            try {
+                return (boolean) experienceManaEnabledGetter.invoke(magicData);
+            } catch (IllegalAccessException | InvocationTargetException exception) {
+                throw invocationFailure("read Dragon Survival's experience-mana setting", exception);
             }
         }
 
@@ -191,7 +215,7 @@ public final class DragonSurvivalManaAdapter {
 
         private static IllegalStateException incompatibleApi(String message, Exception exception) {
             return new IllegalStateException(
-                    message + ". Install Dragon Survival 2.0.51 through 2.0.66.", exception);
+                    message + ". Install Dragon Survival 2.0.51 through 2.0.68.", exception);
         }
 
         private static IllegalStateException invocationFailure(

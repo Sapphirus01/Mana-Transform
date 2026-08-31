@@ -159,7 +159,8 @@ dependencies {
     implementation "curse.maven:dragons-survival-420799:${dragonsurvivalCurseFileId}"
     implementation "curse.maven:irons-spells-n-spellbooks-855414:${ironsSpellbooksCurseFileId}"
     // Iron's Spells 3.15.x does not require Iron's Lib. Supply
-    // -Pirons_lib_curse_file_id=<file id> when compile-checking Iron's Spells 3.16.x.
+    // -Pirons_lib_curse_file_id=<file id> when compile-checking Iron's Spells 3.16.x;
+    // its published metadata requires the matching 1.21.1 Iron's Lib 1.x/2.x line.
     if (ironsLibCurseFileId) {
         implementation "curse.maven:irons-lib-1492763:${ironsLibCurseFileId}"
     }
